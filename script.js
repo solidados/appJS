@@ -49,19 +49,35 @@ const personalMovieDB = {
 
 
 
+let i = 0;
 
-for (let i = 0; i < 2; i++) {
+while (i < 2) {
+    const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
+b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
+
+    if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+        personalMovieDB.movies[a] = b;
+        console.log('Done');
+    } else {
+        console.log('Error');
+    }
+    i++;
+}
+
+
+/* for (let i = 0; i < 2; i++) {
     const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
         b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
 
     if (a != null && b != null && a != '' && b != '' && a.length < 50) {
         personalMovieDB.movies[a] = b;
-        console.log('done');
+        // console.log('done');
     } else {
         console.log('Error');
         i--;
     }
 }
+}*/
 
 if (personalMovieDB.count < 10) {
     alert("Просмотрено довольно мало фильмов");
