@@ -47,6 +47,9 @@ const personalMovieDB = {
     private: false
 };
 
+
+
+
 for (let i = 0; i < 2; i++) {
     const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
         b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
