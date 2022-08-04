@@ -37,7 +37,17 @@
 
 'use strict';
 
-const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+let numberOfFilms;
+
+function start() {
+    numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+
+    while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+        numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+    }
+}
+
+start();
 
 const personalMovieDB = {
     count: numberOfFilms,
@@ -49,43 +59,68 @@ const personalMovieDB = {
 
 
 
-let i = 0;
+// let i = 0;
 
-while (i < 2) {
-    const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
-b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
+// while (i < 2) {
+//     const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
+// b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
 
-    if (a != null && b != null && a != '' && b != '' && a.length < 50) {
-        personalMovieDB.movies[a] = b;
-        console.log('Done');
-    } else {
-        console.log('Error');
+//     if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+//         personalMovieDB.movies[a] = b;
+//         console.log('Done');
+//     } else {
+//         console.log('Error');
+//     }
+//     i++;
+// }
+
+
+// Создаю функцию, которая будет вызывать предыдущий цикл только по требованию, то есть будет его оборачивать
+// Для этого я создаю функцию, а потом вырезаю цикл и помещаю его внутрь функции rememberMyFilms
+function rememberMyFilms(params) {
+    for (let i = 0; i < 2; i++) {
+        const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
+            b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
+
+        if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+            personalMovieDB.movies[a] = b;
+            // console.log('done');
+        } else {
+            console.log('Error');
+            i--;
+        }
     }
-    i++;
 }
+// и для того, чтобы эта функция заработала – не забываю её вызывать:
+rememberMyFilms();
+// функция вызовится и внутри неё сработает цикл
 
-
-/* for (let i = 0; i < 2; i++) {
-    const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
-        b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
-
-    if (a != null && b != null && a != '' && b != '' && a.length < 50) {
-        personalMovieDB.movies[a] = b;
-        // console.log('done');
+// следующую часть "условия" я тоже оборачиваю в функцию
+function detectPersonalLevel(params) {
+    if (personalMovieDB.count < 10) {
+        alert("Просмотрено довольно мало фильмов");
+    } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+        alert("Вы классический зритель");
+    } else if (personalMovieDB.count >= 30) {
+        alert("Вы киноман");
     } else {
-        console.log('Error');
-        i--;
-    }
+        alert("Произошла ошибка 404");
+    }    
 }
-}*/
 
-if (personalMovieDB.count < 10) {
-    alert("Просмотрено довольно мало фильмов");
-} else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
-    alert("Вы классический зритель");
-} else if (personalMovieDB.count >= 30) {
-    alert("Вы киноман");
-} else {
-    alert("Произошла ошибка 404");
-}
+detectPersonalLevel();
+
 console.log(personalMovieDB);
+
+/* =============== Задание на урок 3 ===============
+
+1) Первую часть задания повторить по уроку
+
+2) Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции
+false - выводит в консоль главный объект программы
+
+3) Создать функцию writeYourGenres в которой пользователь будет 3 раза отвечать на вопрос 
+"Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных
+genres
+
+P.S. Функции вызывать не обязательно*/
