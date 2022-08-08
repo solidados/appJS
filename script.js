@@ -91,8 +91,8 @@ const personalMovieDB = {
 // Для этого я создаю функцию, а потом вырезаю цикл и помещаю его внутрь функции rememberMyFilms
 function rememberMyFilms(params) {
     for (let i = 0; i < 2; i++) {
-        const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
-            b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
+        const a = prompt('Назовите один из последних просмотренных фильмов?', '').trim(),
+            b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '').trim();
 
         if (a != null && b != null && a != '' && b != '' && a.length < 50) {
             personalMovieDB.movies[a] = b;
