@@ -49,23 +49,22 @@ P.S. Функции вызывать не обязательно*/
 
 /* ===== Задание на урок 4: =====
 
-1) У нас уже есть рабочее приложение, состоящее из отдельных функций. Представьте, что перед вами стоит задача 
-переписать его так, чтобы все функции стали методами объекта personalMovieDB.
+1) Ззадача - переписать приложение так, чтобы все функции стали методами объекта personalMovieDB.
 Такое случается в реальных продуктах при смене технологий или подхода к архтектуре программы.
 
-2) Создаоть метод toggleVisibleMyDB, который при вызове будет проверять свойство private. Если оно возвращает
+2) Создать метод toggleVisibleMyDB, который при вызове будет проверять свойство private. Если оно возвращает
 false – он переключает его в true, если true – переключает в false. Протестировать вместе с showMyDB
 
 3) В методе writeYourGenres – запретить пользователю нажимать кнопку "Отмена" или оставлять пустую строку.
 Если он это сделал, то возвращать его к этому же вопросу. После того, как все жанры введены, при помощи метода
-forEach вывести в консоль сообщения в таком виде: "Люимый жанр #(+номер по порядку, начиная с 1) – 
-это (+название из массива)"
+forEach вывести в консоль сообщения в таком виде: 
+"Люимый жанр #(+номер по порядку, начиная с 1) – это (+название из массива)"
 */
 
 
 'use strict';
 
-let numberOfFilms;
+/* let numberOfFilms;
 
 function start() {
     numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
@@ -75,56 +74,111 @@ function start() {
     }
 }
 
-start();
+start(); */
 
 const personalMovieDB = {
-    count: numberOfFilms,
+    count: 0,
     movies: {},
     actors: {},
     genres: [],
-    private: false
+    private: false,
+    start: function () {
+        personalMovieDB.count = +prompt('Сколько фильмов вы уже посмотрели?', '');
+        
+        while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)) {
+            personalMovieDB.count = +prompt('Сколько фильмов вы уже посмотрели?', '');
+        }
+    },
+    rememberMyFilms: function () {
+        for (let i = 0; i < 2; i++) {
+            const a = prompt('Назовите один из последних просмотренных фильмов?', '').trim(),
+                b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '').trim();
+
+            if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+                personalMovieDB.movies[a] = b;
+                // console.log('done');
+            } else {
+                console.log('Error');
+                i--;
+            }
+        }
+    },
+    detectPersonalLevel: function () {
+        if (personalMovieDB.count < 10) {
+            alert("Просмотрено довольно мало фильмов");
+        } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+            alert("Вы классический зритель");
+        } else if (personalMovieDB.count >= 30) {
+            alert("Вы киноман");
+        } else {
+            alert("Произошла ошибка 404");
+        }
+    },
+    showMyDB: function (hidden) {
+        if (!hidden) {
+            console.log(personalMovieDB);
+        }
+    },
+    toggleVisibleMyDB: function () {
+        if (personalMovieDB.private){
+            personalMovieDB.private = false;
+        } else {
+            personalMovieDB.private = true;
+        }
+    },
+    writeYourGenres: function () {
+        for (let i = 1; i <= 3; i++) {
+            personalMovieDB.genres[i - 1] = prompt(`Ваш любимый жанр под номером ${i}`, '');
+        }
+    },
+    
 };
 
+// personalMovieDB.start();
+// personalMovieDB.rememberMyFilms();
+// personalMovieDB.detectPersonalLevel();
+//personalMovieDB.showMyDB();
+// personalMovieDB.toggleVisibleMyDB();
+// personalMovieDB.writeYourGenres();
 
-// Далее здесь закомментирован вариант цикла while идентичного циклу for как альтернатива
-// let i = 0;
+/* Далее здесь закомментирован вариант цикла while идентичного циклу for как альтернатива
+let i = 0;
 
-// while (i < 2) {
-//     const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
-// b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
+while (i < 2) {
+    const a = prompt('Назовите один из последних просмотренных фильмов?', ''),
+b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '');
 
-//     if (a != null && b != null && a != '' && b != '' && a.length < 50) {
-//         personalMovieDB.movies[a] = b;
-//         console.log('Done');
-//     } else {
-//         console.log('Error');
-//     }
-//     i++;
-// }
-
+    if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+        personalMovieDB.movies[a] = b;
+        console.log('Done');
+    } else {
+        console.log('Error');
+    }
+    i++;
+} */
 
 // Создаю функцию, которая будет вызывать предыдущий цикл только по требованию, то есть будет его оборачивать
 // Для этого я создаю функцию, а потом вырезаю цикл и помещаю его внутрь функции rememberMyFilms
-function rememberMyFilms(params) {
+/* function rememberMyFilms(params) {
     for (let i = 0; i < 2; i++) {
-        const a = prompt('Назовите один из последних просмотренных фильмов?', '').trim(),
-            b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '').trim();
+const a = prompt('Назовите один из последних просмотренных фильмов?', '').trim(),
+    b = prompt('Какую оценку вы ему поставите (по шкале от 1 до 10)?', '').trim();
 
-        if (a != null && b != null && a != '' && b != '' && a.length < 50) {
-            personalMovieDB.movies[a] = b;
-            // console.log('done');
-        } else {
-            console.log('Error');
-            i--;
-        }
-    }
+if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+    personalMovieDB.movies[a] = b;
+    // console.log('done');
+} else {
+    console.log('Error');
+    i--;
 }
+}
+} */
 // и для того, чтобы эта функция заработала – не забываю её вызывать:
-rememberMyFilms();
+// rememberMyFilms();
 // функция вызовится и внутри неё сработает цикл
 
 // следующую часть "условия" я тоже оборачиваю в функцию
-function detectPersonalLevel(params) {
+/* function detectPersonalLevel(params) {
     if (personalMovieDB.count < 10) {
         alert("Просмотрено довольно мало фильмов");
     } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
@@ -136,20 +190,20 @@ function detectPersonalLevel(params) {
     }
 }
 
-detectPersonalLevel();
+detectPersonalLevel(); */
 
-function showMyDB(hidden) {
+/* function showMyDB(hidden) {
     if (!hidden) {
         console.log(personalMovieDB);
     }
 }
 
-showMyDB(personalMovieDB.private);
+showMyDB(personalMovieDB.private); */
 
-function writeYourGenres() {
+/* function writeYourGenres() {
     for (let i = 1; i <= 3; i++) {
         personalMovieDB.genres[i - 1] = prompt(`Ваш любимый жанр под номером ${i}`, '');
     }
 }
 
-writeYourGenres();
+writeYourGenres(); */
