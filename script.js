@@ -127,14 +127,14 @@ const personalMovieDB = {
         }
     },
     writeYourGenres: function () {
-        for (let i = 1; i <= 3; i++) {
-            let genre = prompt(`Ваш любимый жанр под номером ${i}`);
+        for (let i = 1; i < 2; i++) {
+            let genres = prompt(`Введите ваши любимые жанры через запятую`).toLowerCase();
 
-            if (genre == '' || genre == null) {
+            if (genres == '' || genres == null) {
                 console.log('Вы ввели некорректные данные, или не ввели ничего');
                 i--;
             } else {
-                personalMovieDB.genres[i - 1] = genre;
+                personalMovieDB.genres = genres.split(', ').sort();
             }
         }
             personalMovieDB.genres.forEach((item, i) => {
